@@ -1,4 +1,4 @@
-scz
+EAv2
 ===
 
-Analysis of brain data (BrainSpan) for schizophrenia prioritized genes (DEPICT)
+Analysis of Educational Attainment. Primarily spatio-temporal analysis of brain transcriptome data. Repository is forked from "scz".

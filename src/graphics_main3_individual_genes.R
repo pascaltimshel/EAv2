@@ -12,10 +12,11 @@ library(reshape2)
 library(tools) # for file_path_sans_ext
 library(grid) # for unit() function
 
-
 rm(list=ls())
-wd <- "/Users/pascaltimshel/p_scz/brainspan/src"
+wd <- path.expand("~/p_EAv2/git/EAv2/src")
 setwd(wd)
+
+release <- "release_v1"
 
 
 ############################# LOAD EXPRESSION DATA - HIGH RES #################################
@@ -35,8 +36,8 @@ source("function_load_gene_list_data_individual_gene_plots.R", echo=TRUE)
 #save.image(file="RData_tmp/XXXXXXXXXXX.RData")
 
 ########## Read ENSEMBL-2-HGNC mapping file for prioritized genes ##############
-file.map.prioritized <- '/Users/pascaltimshel/p_scz/brainspan/gene_lists/gene_prioritization.csv'
-df.map.prioritized <- read.csv(file.map.prioritized, h=F)
+file.map.prioritized <- path.expand(sprintf('~/p_EAv2/git/EAv2/gene_lists/%s/gene_prioritization_hgnc_map.txt', release))
+df.map.prioritized <- read.table(file.map.prioritized, h=F, sep="\t")
 
 ###################################### PLOT individual genes ################################
 

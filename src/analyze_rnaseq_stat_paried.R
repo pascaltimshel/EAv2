@@ -9,10 +9,11 @@ library(ggplot2)
 library(reshape2)
 library(tools) # for file_path_sans_ext
 
-
 rm(list=ls())
-wd <- "/Users/pascaltimshel/p_scz/brainspan/src"
+wd <- path.expand("~/p_EAv2/git/EAv2/src")
 setwd(wd)
+
+release <- "release_v1"
 
 ####################################### SOURCE ###########################################
 source("multiplot.R")
@@ -21,8 +22,8 @@ source("multiplot.R")
 load(file="RData/data_rnaseq_expression_processed_full_res.RData") # df.expression_matrix.clean, df.expression_matrix.clean.melt
 
 ########### Setting prioritization #########
-file.gene_prioritization <- "../gene_lists/gene_prioritization.txt"
-#file.gene_prioritization <- "../gene_lists/gene_associated.txt"
+file.gene_prioritization <- sprintf("../gene_lists/%s/gene_prioritization.txt", release)
+#file.gene_prioritization <- sprintf("../gene_lists/%s/gene_associated.txt", release)
 
 gene_list <- basename(file_path_sans_ext(file.gene_prioritization))
 
@@ -59,14 +60,14 @@ df.natal.gene.mean <- ddply(df.expression_matrix.clean.melt.priori, .(ensembl_ge
 
 ### t.test
 levels(df.natal.gene.mean$natal)
-fit1 <- t.test(mean~natal, data=df.natal.gene.mean, alternative="greater", paired=TRUE)
+fit1 <- t.test(mean~natal, data=df.natal.gene.mean, alternative="less", paired=TRUE) # OBS: EAv2 is testing "less" (SCZ was testing alternative="greater")
 fit1
 fit1$p.value
 ### calculation odd's ratio
 df.or <- ddply(df.natal.gene.mean, .(natal), summarise,
                group_mean=mean(mean, na.rm=T))
 df.or
-or_log2_corrected <- (2^df.or[df.or$natal=="postnatal","group_mean"]-1)/(2^df.or[df.or$natal=="prenatal","group_mean"]-1)
+or_log2_corrected <- (2^df.or[df.or$natal=="prenatal","group_mean"]-1)/(2^df.or[df.or$natal=="postnatal","group_mean"]-1)
 #formula: or = ((2^mu1)-1)/((2^mu2)-1)
 or_log2_corrected
 
@@ -110,7 +111,7 @@ df.mean.prio.stage[order(-df.mean.prio.stage$mean_stage),]
 
 
 ################# MAKING TEST - step#5 #################
-stage_to_test_against <- "s11"
+stage_to_test_against <- "s3b" # SCZ="s11"
 df_test_against <- subset(df.mean.prio, stage==stage_to_test_against)
 df_rest <- subset(df.mean.prio, stage!=stage_to_test_against)
 ttest_stage <- function(df) {
