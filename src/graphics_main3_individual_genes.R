@@ -16,8 +16,8 @@ rm(list=ls())
 wd <- path.expand("~/p_EAv2/git/EAv2/src")
 setwd(wd)
 
-release <- "release_v1"
-
+#release <- "release_v1"
+release <- "release_v2"
 
 ############################# LOAD EXPRESSION DATA - HIGH RES #################################
 #load(file="RData/data_marray_expression.RData") # df.expression_matrix.clean, df.expression_matrix.clean.melt

@@ -13,7 +13,8 @@ rm(list=ls())
 wd <- path.expand("~/p_EAv2/git/EAv2/src")
 setwd(wd)
 
-release <- "release_v1"
+#release <- "release_v1"
+release <- "release_v2"
 
 ####################################### SOURCE ###########################################
 source("multiplot.R")

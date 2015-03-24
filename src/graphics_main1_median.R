@@ -20,11 +20,13 @@ rm(list=ls())
 wd <- path.expand("~/p_EAv2/git/EAv2/src")
 setwd(wd)
 
-release <- "release_v1"
+#release <- "release_v1"
+release <- "release_v2"
 
 ############################# LOAD EXPRESSION DATA #################################
 #load(file="RData/data_marray_expression.RData") # df.expression_matrix.clean, df.expression_matrix.clean.melt
-load(file="RData/data_rnaseq_expression_processed.RData") # RNAseq AFTER PROCESSING | df.expression_matrix.clean, df.expression_matrix.clean.melt
+#load(file="RData/data_rnaseq_expression_processed.RData") # RNAseq AFTER PROCESSING | df.expression_matrix.clean, df.expression_matrix.clean.melt
+load(file="RData/data_rnaseq_expression_processed_full_res-03-23-2015.RData") # AFTER CORRECTING STAGES MISPLACEMENT | RNAseq AFTER PROCESSING | df.expression_matrix.clean, df.expression_matrix.clean.melt
 
 str(df.expression_matrix.clean.melt)
 
@@ -92,13 +94,13 @@ p <- p + geom_line(data=df.all.sem, aes(x=stage, y=mean1, group=1, color="All ge
 p <- p + geom_errorbar(data=df.all.sem, aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1),color='black', width=0.2)
 p
 ### Adding Nearest Genes
-p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Nearest Genes"), aes(x=stage, y=mean1, group=1, color="Nearest genes"), linetype='solid', size=1)
-p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Nearest Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='sky blue', width=0.2)
-p
+#p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Nearest Genes"), aes(x=stage, y=mean1, group=1, color="Nearest genes"), linetype='solid', size=1)
+#p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Nearest Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='sky blue', width=0.2)
+#p
 ### Adding Associated Genes
-p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, y=mean1, group=1, color="Associated genes"), linetype='solid', size=1)
-p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='orange', width=0.2)
-p
+#p <- p + geom_line(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, y=mean1, group=1, color="Associated genes"), linetype='solid', size=1)
+#p <- p + geom_errorbar(data=subset(df.summary.sem, gene_list == "Associated Genes"), aes(x=stage, ymax=mean1+sd1, ymin=mean1-sd1), color='orange', width=0.2)
+#p
 
 
 p <- p + scale_color_manual(name="Gene list", values=c(
@@ -138,8 +140,13 @@ p
 #p <- p + guides(colour = guide_legend(keywidth = 2, keyheight = 1, override.aes = list(size=c(1,1,1,0.1)))) #"Prioritized genes (structures)"=0.1
 
 ### VARIABLE
-p <- p + labs(y="Mean median brain expression")
+label.y <- expression(paste("Mean median brain expression (log2 RPKM)"))
+p <- p + labs(y=label.y)
 p
 
-#main1_rnaseq_release_v1_median-9x6.pdf
+
+
+#ggsave("main1_rnaseq_release_v1_median_ONLY_PRIORITIZED-9x6.pdf", w=9, h=6)
+#ggsave("main1_rnaseq_release_v1_median-9x6.pdf", w=9, h=6)
+
 #main1_rnaseq_release_v1_median_NO_NEAREST-9x6.pdf

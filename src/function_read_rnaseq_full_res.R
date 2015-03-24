@@ -8,15 +8,19 @@
 # 2) "data_rnaseq_expression_processed.RData": winsorized and log2 transformed
 # OBS: RNAseq has $gene_length set to a DUMMY VARIABLE (123)
 ############################################
-rm(list=ls())
-
 library(plyr)
 library(ggplot2)
 library(reshape2)
-library(tools) # for file_path_sans_ext
+library(tools) # for file_path_sans_ext, path.expand()
+
+rm(list=ls())
+
+wd <- path.expand("~/Dropbox/0_Projects/p_EAv2/git/EAv2/src")
+setwd(wd)
 
 ########### SOURCING - **OBS**: HIGH RES! ###########
-source("function_def_stages.R", echo=TRUE)
+#source("function_def_stages.R", echo=TRUE)
+source("function_def_stages.corrected.R", echo=TRUE) # New march 2015
 
 #### New: this will define the order of the age factor
 #### I created this vector partial manually. 
@@ -120,7 +124,7 @@ str(df.expression_matrix.clean.melt)
 df.expression_matrix.clean.unprocessed <- df.expression_matrix.clean
 df.expression_matrix.clean.melt.unprocessed <- df.expression_matrix.clean.melt
 ################################# SAVING *UNPROCESSED* DATA ###################################
-#save(df.expression_matrix.clean.unprocessed, df.expression_matrix.clean.melt.unprocessed, file="RData/data_rnaseq_expression_unprocessed_full_res.RData")
+#save(df.expression_matrix.clean.unprocessed, df.expression_matrix.clean.melt.unprocessed, file="RData/data_rnaseq_expression_unprocessed_full_res.corrected-03-23-2015.RData")
 #load(file="RData/data_rnaseq_expression_unprocessed_full_res.RData")
 #df.expression_matrix.clean <- df.expression_matrix.clean.unprocessed
 #df.expression_matrix.clean.melt <- df.expression_matrix.clean.melt.unprocessed
@@ -137,7 +141,7 @@ df.expression_matrix.clean.melt <- df.expression_matrix.rnaseq.clean.melt.transf
 
 ################################# SAVING *PROCESSED* DATA (winsorizing, log2) ###################################
 ### Notice that the "unprocessed" and "processed" data has different variable names
-#save(df.expression_matrix.clean, df.expression_matrix.clean.melt, file="RData/data_rnaseq_expression_processed_full_res.RData") # df.expression_matrix.clean, df.expression_matrix.clean.melt
+#save(df.expression_matrix.clean, df.expression_matrix.clean.melt, file="RData/data_rnaseq_expression_processed_full_res-03-23-2015.RData") # df.expression_matrix.clean, df.expression_matrix.clean.melt
 
 
 #str(df.expression_matrix.clean)
